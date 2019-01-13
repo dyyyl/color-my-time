@@ -1,28 +1,48 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment, useEffect, useState } from 'react';
+import { createGlobalStyle } from 'styled-components';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+import { getTime } from './helpers/time';
+
+const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Lato:100');
+
+  * {
+    margin: 0 auto;
   }
-}
+
+  html {
+    background-color: ${props => props.color};
+  }
+
+  h1 {
+    font-family: 'Lato', Helvetiva, Arial, sans-serif;
+    font-size: 5rem;
+    font-weight: 100;
+  }
+`;
+
+const App = () => {
+  const [time, setTime] = useState(getTime());
+
+  useEffect(() => {
+    setTime(getTime());
+  });
+
+  return (
+    <Fragment>
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+        }}
+      >
+        <h1 style={{ color: '#ffffff' }}>{time}</h1>
+      </div>
+      <GlobalStyle color={time} />
+    </Fragment>
+  );
+};
 
 export default App;
